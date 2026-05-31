@@ -1,3 +1,5 @@
+# For createsuperuser I did : email: erfan.shokr300@gmail.com // Password: 765515erfan
+
 """
 Django settings for config project.
 
@@ -37,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users",
+    "projects",
+    "tasks",
 ]
 
 MIDDLEWARE = [
@@ -115,3 +120,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+AUTH_USER_MODEL = "users.User"
