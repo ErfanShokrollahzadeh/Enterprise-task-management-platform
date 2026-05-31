@@ -14,6 +14,37 @@ function getAuthHeaders() {
   return { Authorization: `Bearer ${accessToken}` };
 }
 
+export type TokenPair = {
+  access: string;
+  refresh: string;
+};
+
+export function setTokens(tokens: TokenPair) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem("accessToken", tokens.access);
+  window.localStorage.setItem("refreshToken", tokens.refresh);
+}
+
+export function clearTokens() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.removeItem("accessToken");
+  window.localStorage.removeItem("refreshToken");
+}
+
+export function hasAccessToken() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return Boolean(window.localStorage.getItem("accessToken"));
+}
+
 async function request<T>(path: string, options: RequestInit = {}) {
   const headers = new Headers(options.headers);
   headers.set("Content-Type", "application/json");
@@ -29,11 +60,46 @@ async function request<T>(path: string, options: RequestInit = {}) {
   });
 
   if (!response.ok) {
+    const contentType = response.headers.get("content-type") ?? "";
+    if (contentType.includes("application/json")) {
+      const data = (await response.json()) as { detail?: string };
+      if (data.detail) {
+        throw new Error(data.detail);
+      }
+    }
+
     const text = await response.text();
     throw new Error(text || `Request failed with status ${response.status}`);
   }
 
   return (await response.json()) as T;
+}
+
+export async function login(email: string, password: string) {
+  const response = await fetch(`${API_BASE}/auth/token/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  if (!response.ok) {
+    const contentType = response.headers.get("content-type") ?? "";
+    if (contentType.includes("application/json")) {
+      const data = (await response.json()) as { detail?: string };
+      if (data.detail) {
+        throw new Error(data.detail);
+      }
+    }
+
+    const text = await response.text();
+    throw new Error(text || `Login failed with status ${response.status}`);
+  }
+
+  const tokens = (await response.json()) as TokenPair;
+  setTokens(tokens);
+  return tokens;
 }
 
 export type ApiBoard = {

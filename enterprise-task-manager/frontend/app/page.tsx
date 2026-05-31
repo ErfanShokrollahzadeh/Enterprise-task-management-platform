@@ -11,6 +11,8 @@ import { useEffect, useMemo, useState } from "react";
 import {
   fetchBoards,
   fetchTasks,
+  hasAccessToken,
+  login,
   updateTaskBoard,
   type ApiTask,
 } from "../lib/api";
@@ -21,6 +23,10 @@ const PROJECT_ID = 1;
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const boardOrder = useKanbanStore((state) => state.boardOrder);
   const columns = useKanbanStore((state) => state.columns);
   const tasksById = useKanbanStore((state) => state.tasksById);
@@ -38,6 +44,10 @@ export default function Home() {
       return { column, tasks };
     });
   }, [boardOrder, columns, tasksById]);
+
+  useEffect(() => {
+    setIsAuthenticated(hasAccessToken());
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -61,12 +71,16 @@ export default function Home() {
       }
     };
 
-    loadData();
+    if (isAuthenticated) {
+      loadData();
+    } else {
+      setIsLoading(false);
+    }
 
     return () => {
       isMounted = false;
     };
-  }, [setData]);
+  }, [isAuthenticated, setData]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -115,6 +129,11 @@ export default function Home() {
       return;
     }
 
+    if (!isAuthenticated) {
+      setToast("Please sign in before moving tasks.");
+      return;
+    }
+
     const sourceBoardId = Number(source.droppableId);
     const destinationBoardId = Number(destination.droppableId);
     if (
@@ -136,7 +155,30 @@ export default function Home() {
       await updateTaskBoard(taskId, destinationBoardId);
     } catch (error) {
       rollback(snapshot);
-      setToast("Update failed. Your change was rolled back.");
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "Update failed. Your change was rolled back.";
+      setToast(message);
+    }
+  };
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoggingIn(true);
+    try {
+      await login(email, password);
+      setIsAuthenticated(true);
+      setToast(null);
+      setIsLoading(true);
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : "Login failed. Check your email and password.";
+      setToast(message);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -168,7 +210,50 @@ export default function Home() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl px-6 pb-16 pt-10">
-        {isLoading ? (
+        {!isAuthenticated ? (
+          <div className="rounded-3xl bg-white/80 p-8 shadow-lg backdrop-blur">
+            <h2 className="text-lg font-semibold text-zinc-900">Sign in</h2>
+            <p className="mt-2 text-sm text-zinc-500">
+              Use your Django admin credentials to load and update tasks.
+            </p>
+            <form
+              onSubmit={handleLogin}
+              className="mt-6 grid gap-4 md:grid-cols-2"
+            >
+              <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                Email
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-normal text-zinc-900 outline-none focus:border-zinc-400"
+                  placeholder="you@example.com"
+                  required
+                />
+              </label>
+              <label className="flex flex-col gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                Password
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  className="rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-normal text-zinc-900 outline-none focus:border-zinc-400"
+                  placeholder="••••••••"
+                  required
+                />
+              </label>
+              <div className="md:col-span-2">
+                <button
+                  type="submit"
+                  disabled={isLoggingIn}
+                  className="w-full rounded-full bg-zinc-900 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-amber-100 transition disabled:opacity-60"
+                >
+                  {isLoggingIn ? "Signing in..." : "Sign in"}
+                </button>
+              </div>
+            </form>
+          </div>
+        ) : isLoading ? (
           <div className="rounded-3xl bg-white/70 p-10 text-center text-sm text-zinc-500 shadow-lg">
             Loading board...
           </div>
@@ -188,7 +273,7 @@ export default function Home() {
                       <section
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className="rounded-3xl bg-white/80 p-4 shadow-lg backdrop-blur"
+                        className="min-h-60 rounded-3xl bg-white/80 p-4 shadow-lg backdrop-blur"
                       >
                         <div className="mb-4 flex items-center justify-between">
                           <h2 className="text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500">
@@ -198,7 +283,7 @@ export default function Home() {
                             {tasks.length}
                           </span>
                         </div>
-                        <div className="flex flex-col gap-3">
+                        <div className="min-h-45 flex flex-col gap-3">
                           {tasks.map((task, index) => (
                             <Draggable
                               draggableId={String(task.id)}

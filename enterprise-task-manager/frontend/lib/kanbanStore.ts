@@ -40,8 +40,28 @@ const cloneSnapshot = (state: KanbanState): Snapshot => ({
   tasksById: { ...state.tasksById },
 });
 
+const nameOrder = new Map([
+  ["to do", 0],
+  ["doing", 1],
+  ["done", 2],
+]);
+
+const normalizeName = (name: string) => name.toLowerCase().replace(/\s+/g, " ").trim();
+
 const sortBoards = (boards: ApiBoard[]) =>
-  [...boards].sort((a, b) => a.order - b.order || a.id - b.id);
+  [...boards].sort((a, b) => {
+    if (a.order !== b.order) {
+      return a.order - b.order;
+    }
+
+    const aOrder = nameOrder.get(normalizeName(a.name)) ?? 999;
+    const bOrder = nameOrder.get(normalizeName(b.name)) ?? 999;
+    if (aOrder !== bOrder) {
+      return aOrder - bOrder;
+    }
+
+    return a.id - b.id;
+  });
 
 const sortTasks = (tasks: ApiTask[]) =>
   [...tasks].sort(
