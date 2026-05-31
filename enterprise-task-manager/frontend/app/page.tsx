@@ -211,8 +211,8 @@ export default function Home() {
                                   {...dragProvided.draggableProps}
                                   {...dragProvided.dragHandleProps}
                                   className={`rounded-2xl border border-zinc-200/60 bg-white p-4 shadow-sm transition-shadow ${snapshot.isDragging
-                                      ? "shadow-xl"
-                                      : "hover:shadow-md"
+                                    ? "shadow-xl"
+                                    : "hover:shadow-md"
                                     }`}
                                 >
                                   <div className="flex items-center justify-between gap-3">
