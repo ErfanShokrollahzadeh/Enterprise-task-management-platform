@@ -1,0 +1,6 @@
+Django
+channels
+daphne
+django-cors-headers
+djangorestframework
+djangorestframework-simplejwt
