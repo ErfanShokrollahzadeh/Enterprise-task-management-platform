@@ -273,7 +273,7 @@ export default function Home() {
                       <section
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className="min-h-60 rounded-3xl bg-white/80 p-4 shadow-lg backdrop-blur"
+                        className="min-h-60 rounded-3xl bg-white/80 p-4 shadow-lg"
                       >
                         <div className="mb-4 flex items-center justify-between">
                           <h2 className="text-sm font-semibold uppercase tracking-[0.3em] text-zinc-500">
