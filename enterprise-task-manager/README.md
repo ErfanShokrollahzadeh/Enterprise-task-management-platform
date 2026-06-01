@@ -28,6 +28,34 @@ A full-stack task management platform built with Django + Django REST Framework 
 - JWT auth endpoints at `/api/auth/token/` and `/api/auth/token/refresh/`.
 - WebSocket updates at `/ws/projects/<project_id>/`.
 
+## System Flow Diagrams
+
+### Request + Real-Time Update Flow
+
+```mermaid
+flowchart LR
+   U[User] -->|Login| FE[Next.js UI]
+   FE -->|JWT request| API[REST API]
+   API -->|JWT response| FE
+   FE -->|CRUD tasks| API
+   API --> DB[(Database)]
+   API -->|Broadcast update| WS[WebSocket Channel]
+   WS --> FE
+```
+
+### Domain Model Shape
+
+```mermaid
+flowchart TD
+   W[Workspace] --> P[Project]
+   P --> B[Board]
+   P --> T[Task]
+   B --> T
+   U[User] -->|owns| W
+   U -->|member of| P
+   U -->|assigned to| T
+```
+
 ## Local Development
 
 ### Backend
