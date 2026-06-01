@@ -143,6 +143,7 @@ CORS_ALLOW_METHODS = [
     "DELETE",
     "OPTIONS",
 ]
+CORS_PREFLIGHT_MAX_AGE = 0
 CORS_ALLOW_HEADERS = [
     "accept",
     "authorization",
