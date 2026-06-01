@@ -19,6 +19,11 @@ export type TokenPair = {
   refresh: string;
 };
 
+type RefreshResponse = {
+  access: string;
+  refresh?: string;
+};
+
 export function setTokens(tokens: TokenPair) {
   if (typeof window === "undefined") {
     return;
@@ -45,7 +50,41 @@ export function hasAccessToken() {
   return Boolean(window.localStorage.getItem("accessToken"));
 }
 
-async function request<T>(path: string, options: RequestInit = {}) {
+async function refreshAccessToken() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const refreshToken = window.localStorage.getItem("refreshToken");
+  if (!refreshToken) {
+    return false;
+  }
+
+  const response = await fetch(`${API_BASE}/auth/token/refresh/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refresh: refreshToken }),
+  });
+
+  if (!response.ok) {
+    return false;
+  }
+
+  const data = (await response.json()) as RefreshResponse;
+  setTokens({
+    access: data.access,
+    refresh: data.refresh ?? refreshToken,
+  });
+  return true;
+}
+
+async function request<T>(
+  path: string,
+  options: RequestInit = {},
+  allowRetry = true,
+) {
   const headers = new Headers(options.headers);
   headers.set("Content-Type", "application/json");
   const authHeaders = getAuthHeaders();
@@ -60,6 +99,16 @@ async function request<T>(path: string, options: RequestInit = {}) {
   });
 
   if (!response.ok) {
+    if (response.status === 401 && allowRetry) {
+      const refreshed = await refreshAccessToken();
+      if (refreshed) {
+        return request<T>(path, options, false);
+      }
+
+      clearTokens();
+      return request<T>(path, options, false);
+    }
+
     const contentType = response.headers.get("content-type") ?? "";
     if (contentType.includes("application/json")) {
       const data = (await response.json()) as { detail?: string };
