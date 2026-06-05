@@ -194,7 +194,7 @@ export default function Home() {
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#fff7ed,#fef3c7,#f5f5f4)] text-zinc-900">
       <header className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 pt-10">
         <div className="inline-flex w-fit items-center rounded-full bg-zinc-900 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-amber-100">
-          Phase 7 Kanban
+          Enterprise Task Manager
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
