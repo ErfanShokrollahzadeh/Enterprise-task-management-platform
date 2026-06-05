@@ -186,3 +186,18 @@ export async function updateTaskBoard(taskId: number, boardId: number) {
     body: JSON.stringify({ board: boardId }),
   });
 }
+
+export type ApiProject = {
+  id: number;
+  workspace: number;
+  name: string;
+  description: string;
+  members: number[];
+  team: number | null;
+  team_name: string | null;
+  created_at: string;
+};
+
+export async function fetchProject(projectId: number) {
+  return request<ApiProject>(`/projects/${projectId}/`);
+}

@@ -20,12 +20,13 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from projects.views import ProjectViewSet, WorkspaceViewSet
+from projects.views import ProjectViewSet, WorkspaceViewSet, TeamViewSet
 from tasks.views import BoardViewSet, TaskViewSet
 
 
 router = DefaultRouter()
 router.register("workspaces", WorkspaceViewSet)
+router.register("teams", TeamViewSet)
 router.register("projects", ProjectViewSet)
 router.register("boards", BoardViewSet)
 router.register("tasks", TaskViewSet)

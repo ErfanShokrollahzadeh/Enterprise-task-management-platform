@@ -11,10 +11,12 @@ import { useEffect, useMemo, useState } from "react";
 import {
   fetchBoards,
   fetchTasks,
+  fetchProject,
   hasAccessToken,
   login,
   updateTaskBoard,
   type ApiTask,
+  type ApiProject,
 } from "../lib/api";
 import { useKanbanStore } from "../lib/kanbanStore";
 
@@ -27,6 +29,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [project, setProject] = useState<ApiProject | null>(null);
   const boardOrder = useKanbanStore((state) => state.boardOrder);
   const columns = useKanbanStore((state) => state.columns);
   const tasksById = useKanbanStore((state) => state.tasksById);
@@ -54,11 +57,16 @@ export default function Home() {
 
     const loadData = async () => {
       try {
-        const [boards, tasks] = await Promise.all([fetchBoards(), fetchTasks()]);
+        const [boards, tasks, projectData] = await Promise.all([
+          fetchBoards(),
+          fetchTasks(),
+          fetchProject(PROJECT_ID),
+        ]);
         const projectBoards = boards.filter((board) => board.project === PROJECT_ID);
         const projectTasks = tasks.filter((task) => task.project === PROJECT_ID);
         if (isMounted) {
           setData(projectBoards, projectTasks);
+          setProject(projectData);
         }
       } catch (error) {
         if (isMounted) {
@@ -191,16 +199,20 @@ export default function Home() {
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl">
-              Enterprise Task Board
+              {project ? project.name : "Enterprise Task Board"}
             </h1>
             <p className="max-w-2xl text-sm text-zinc-600 md:text-base">
-              Drag cards across columns. Updates are optimistic and broadcast in
-              real time to connected teammates.
+              {project?.description || "Drag cards across columns. Updates are optimistic and broadcast in real time to connected teammates."}
             </p>
           </div>
           <div className="flex items-center gap-3 text-xs text-zinc-500">
+            {project?.team_name ? (
+              <span className="rounded-full bg-amber-100 text-amber-900 font-semibold px-3 py-1 shadow-sm">
+                Team: {project.team_name}
+              </span>
+            ) : null}
             <span className="rounded-full bg-white/70 px-3 py-1 shadow-sm">
-              Project {PROJECT_ID}
+              Project ID: {PROJECT_ID}
             </span>
             <span className="rounded-full bg-white/70 px-3 py-1 shadow-sm">
               WebSocket Ready

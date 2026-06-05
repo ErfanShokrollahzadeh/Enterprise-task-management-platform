@@ -1,0 +1,393 @@
+[
+{
+    "model": "sessions.session",
+    "pk": "9wyegka5pjrorkyulfvilhztvfnl8rre",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGllaL_GHkp4zRGvvGgeQLcVJhbg7spQC2jcz761m2rcy713WeWF1UaBOv1uk9JQ6AD-o3ptOrW7rEvVQ9EG7vjWW1_Vw_w4K9TJqZLAcJaC3zDgZ6423NHEIBALubMBZzI49TgkETYpAmNn4ZLMAqs8X1_83qw:1wTkka:MoKxv_XolRNV-PMs9TbXkSy623qzNOZaW3CAieBVvJo",
+        "expire_date": "2026-06-14T18:19:04.410Z"
+    }
+},
+{
+    "model": "token_blacklist.blacklistedtoken",
+    "pk": 1,
+    "fields": {
+        "token": 1,
+        "blacklisted_at": "2026-06-01T16:13:00.734Z"
+    }
+},
+{
+    "model": "token_blacklist.blacklistedtoken",
+    "pk": 2,
+    "fields": {
+        "token": 3,
+        "blacklisted_at": "2026-06-01T16:45:57.211Z"
+    }
+},
+{
+    "model": "token_blacklist.blacklistedtoken",
+    "pk": 3,
+    "fields": {
+        "token": 6,
+        "blacklisted_at": "2026-06-01T17:54:27.777Z"
+    }
+},
+{
+    "model": "users.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$lWiq9wj1YI5GsG7vEQRmny$gCzzItflINxbCIzSPVJZR+6wkioj+7w35K0chCkie6Y=",
+        "last_login": "2026-05-31T18:19:04.407Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-05-31T16:49:22.379Z",
+        "email": "erfan.shokr300@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "projects.workspace",
+    "pk": 1,
+    "fields": {
+        "name": "Erfan Campuse DLA",
+        "description": "This workspace is going to be a test.",
+        "owner": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "created_at": "2026-05-31T17:48:59.095Z"
+    }
+},
+{
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+        "workspace": 1,
+        "name": "RF system 5G",
+        "description": "This Project is going to be a test.",
+        "created_at": "2026-05-31T17:50:35.130Z",
+        "members": [
+            [
+                "erfan.shokr300@gmail.com"
+            ]
+        ]
+    }
+},
+{
+    "model": "tasks.board",
+    "pk": 1,
+    "fields": {
+        "project": 1,
+        "name": "Doing",
+        "order": 1,
+        "created_at": "2026-05-31T17:51:18.262Z"
+    }
+},
+{
+    "model": "tasks.board",
+    "pk": 2,
+    "fields": {
+        "project": 1,
+        "name": "TO DO",
+        "order": 2,
+        "created_at": "2026-05-31T17:51:35.728Z"
+    }
+},
+{
+    "model": "tasks.board",
+    "pk": 3,
+    "fields": {
+        "project": 1,
+        "name": "DONE",
+        "order": 3,
+        "created_at": "2026-05-31T17:51:46.681Z"
+    }
+},
+{
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+        "project": 1,
+        "board": 1,
+        "title": "This is a test for Doing",
+        "description": "This is a test.",
+        "assigned_to": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "priority": "medium",
+        "deadline": "2026-06-24T18:00:00Z",
+        "created_at": "2026-05-31T17:53:37.602Z",
+        "updated_at": "2026-06-01T17:54:38.917Z"
+    }
+},
+{
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+        "project": 1,
+        "board": 2,
+        "title": "This is a test for TO DO",
+        "description": "This is a test for TO DO",
+        "assigned_to": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "priority": "urgent",
+        "deadline": "2026-06-20T12:00:00Z",
+        "created_at": "2026-05-31T17:54:41.692Z",
+        "updated_at": "2026-06-01T17:54:36.588Z"
+    }
+},
+{
+    "model": "tasks.task",
+    "pk": 3,
+    "fields": {
+        "project": 1,
+        "board": 3,
+        "title": "This is test for DONE",
+        "description": "This is test for DONE",
+        "assigned_to": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "priority": "high",
+        "deadline": "2026-06-10T00:00:00Z",
+        "created_at": "2026-05-31T17:55:16.547Z",
+        "updated_at": "2026-06-01T17:54:41.191Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "8b5f6ab6ea8142eb9f71d1ba093449fb",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDg1NjAxMCwiaWF0IjoxNzgwMjUxMjEwLCJqdGkiOiI4YjVmNmFiNmVhODE0MmViOWY3MWQxYmEwOTM0NDlmYiIsInVzZXJfaWQiOiIxIn0.Zz-08O28Rklvs2ll0L_V24rXdO4GGwPxsq9lL7jdapQ",
+        "created_at": "2026-05-31T18:13:30.291Z",
+        "expires_at": "2026-06-07T18:13:30Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 2,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "b5b705baae5b4dc6ab84a9f2d2fbfe2a",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDkzNTE4MCwiaWF0IjoxNzgwMzMwMzgwLCJqdGkiOiJiNWI3MDViYWFlNWI0ZGM2YWI4NGE5ZjJkMmZiZmUyYSIsInVzZXJfaWQiOiIxIn0.9ry_sbgYEcHGfPlvxeHPoXOH5aA-j86wZNf3viu36qo",
+        "created_at": "2026-06-01T16:13:00.707Z",
+        "expires_at": "2026-06-08T16:13:00Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 3,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "b84fb9475d3249e39ff4aa0fa9680373",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDkzNTE4MCwiaWF0IjoxNzgwMzMwMzgwLCJqdGkiOiJiODRmYjk0NzVkMzI0OWUzOWZmNGFhMGZhOTY4MDM3MyIsInVzZXJfaWQiOiIxIn0.UAwIK9ehk6q1jaX2QOGORJNzWBcxewrvDzZuCeUcfbc",
+        "created_at": "2026-06-01T16:13:00.702Z",
+        "expires_at": "2026-06-08T16:13:00Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 4,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "ab2336fbc23747a7b0b125e4cdd9c0b1",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDkzNzE1NywiaWF0IjoxNzgwMzMyMzU3LCJqdGkiOiJhYjIzMzZmYmMyMzc0N2E3YjBiMTI1ZTRjZGQ5YzBiMSIsInVzZXJfaWQiOiIxIn0.xczpOPTL3r4GcAc3zNv04-C8lxklSFuyQB6uEY76Sgc",
+        "created_at": "2026-06-01T16:45:57.178Z",
+        "expires_at": "2026-06-08T16:45:57Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 5,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "181e119d53624fae82dc5fa6bbc43990",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDkzNzE1NywiaWF0IjoxNzgwMzMyMzU3LCJqdGkiOiIxODFlMTE5ZDUzNjI0ZmFlODJkYzVmYTZiYmM0Mzk5MCIsInVzZXJfaWQiOiIxIn0.BwSDIYaOPxat3rWtY4HRVqW9duWmnvKJ5c1LcsyLrko",
+        "created_at": "2026-06-01T16:45:57.172Z",
+        "expires_at": "2026-06-08T16:45:57Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 6,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "78b1ef4731d74acfaf1f86baeaf6f658",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDkzODk3MCwiaWF0IjoxNzgwMzM0MTcwLCJqdGkiOiI3OGIxZWY0NzMxZDc0YWNmYWYxZjg2YmFlYWY2ZjY1OCIsInVzZXJfaWQiOiIxIn0.MMhc3BLZEUBYFxXCcX2Kv1m5gKF9Ud9KWNBkhj211mo",
+        "created_at": "2026-06-01T17:16:10.521Z",
+        "expires_at": "2026-06-08T17:16:10Z"
+    }
+},
+{
+    "model": "token_blacklist.outstandingtoken",
+    "pk": 7,
+    "fields": {
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "jti": "e2e2293972b04c5cbc31f277d1fd7732",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MDk0MTI2NywiaWF0IjoxNzgwMzM2NDY3LCJqdGkiOiJlMmUyMjkzOTcyYjA0YzVjYmMzMWYyNzdkMWZkNzczMiIsInVzZXJfaWQiOiIxIn0.GCpGXZ2gydIBlgCD8xcfif3Z1mCAF1cvaEvi9iwL_y8",
+        "created_at": "2026-06-01T17:54:27.720Z",
+        "expires_at": "2026-06-08T17:54:27Z"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2026-05-31T17:48:59.097Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "projects",
+            "workspace"
+        ],
+        "object_id": "1",
+        "object_repr": "Erfan Campuse DLA",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2026-05-31T17:50:35.136Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "projects",
+            "project"
+        ],
+        "object_id": "1",
+        "object_repr": "RF system 5G",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2026-05-31T17:51:18.263Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "tasks",
+            "board"
+        ],
+        "object_id": "1",
+        "object_repr": "RF system 5G: Doing",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2026-05-31T17:51:35.730Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "tasks",
+            "board"
+        ],
+        "object_id": "2",
+        "object_repr": "RF system 5G: TO DO",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2026-05-31T17:51:46.682Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "tasks",
+            "board"
+        ],
+        "object_id": "3",
+        "object_repr": "RF system 5G: DONE",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2026-05-31T17:53:37.603Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "tasks",
+            "task"
+        ],
+        "object_id": "1",
+        "object_repr": "This is a test for Doing",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2026-05-31T17:54:41.694Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "tasks",
+            "task"
+        ],
+        "object_id": "2",
+        "object_repr": "This is a test for TO DO",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2026-05-31T17:55:16.548Z",
+        "user": [
+            "erfan.shokr300@gmail.com"
+        ],
+        "content_type": [
+            "tasks",
+            "task"
+        ],
+        "object_id": "3",
+        "object_repr": "This is test for DONE",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}
+]
